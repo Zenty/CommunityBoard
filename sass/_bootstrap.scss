@@ -16,6 +16,10 @@ $enable-negative-margins: true;
   font-size: 30px;
 }
 
+.navbar-button:hover, .navbar-button:active {
+  background-color: transparent !important;
+}
+
 .container {
   max-width: 970px;
 }
