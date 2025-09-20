@@ -3,9 +3,15 @@ import { createElement } from 'react';
 
 // page components
 import NotFoundPage from './pages/NotFoundPage.tsx';
+import IndexPage from './pages/IndexPage.tsx';
+import CreatePostPage from './pages/CreatePostPage.tsx';
+import LoginPage from './pages/LoginPage.tsx';
 
 export default [
-  NotFoundPage
+  NotFoundPage,
+  IndexPage,
+  CreatePostPage,
+  LoginPage
 ]
   // map the route property of each page component to a Route
   .map(x => (({ element: createElement(x), ...x.route }) as Route))
