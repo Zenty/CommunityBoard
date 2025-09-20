@@ -23,7 +23,7 @@ export default function Header() {
       expanded={expanded}
       expand="md"
       className="bg-primary"
-      data-bs-theme="dark"
+      data-bs-theme="light"
       fixed="top"
     >
       <Container fluid>
