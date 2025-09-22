@@ -1,6 +1,6 @@
 // Override bootstrap variables
 $font-family-sans-serif: 'Noto Sans';
-$font-size-base: 1.1rem;
+$font-size-base: 1.0rem;
 $line-height-base: 1.4;
 $navbar-dark-color: rgba(white, .8) !default;
 $navbar-dark-hover-color: rgba(white, .9) !default;
@@ -12,12 +12,18 @@ $enable-negative-margins: true;
 
 // Override some Bootstrap defaults
 .navbar-brand {
-  font-family: 'Chewy';
+  font-family: 'Open Sans', sans-serif;
   font-size: 30px;
+  font-weight: bold;
 }
 
 .navbar-button:hover, .navbar-button:active {
   background-color: transparent !important;
+}
+
+.navbar-toggler, .navbar-toggler:focus {
+  border: none;
+  box-shadow: none;
 }
 
 .container {
