@@ -3,12 +3,16 @@ import { Link, useLocation } from 'react-router-dom';
 import { Container, Nav, Navbar, Button } from 'react-bootstrap';
 import routes from '../routes';
 
-export default function Header() {
+ type HeaderProps = {
+    isDarkMode: boolean;
+    setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+
+export default function Header({ isDarkMode, setIsDarkMode }: HeaderProps) {
 
   // whether the navbar is expanded or not
   // (we use this to close it after a click/selection)
   const [expanded, setExpanded] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   //  get the current route
   const pathName = useLocation().pathname;
