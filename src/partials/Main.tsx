@@ -10,8 +10,8 @@ export default function Main() {
     bwImages: false
   });
 
-  return <main className="mt-5">
-    <Container className="mt-5 mb-4">
+  return <main className="mt-5" data-bs-theme="light">
+    <Container className="mt-5 mb-4" data-bs-theme="light">
       <Outlet context={stateAndSetter} />
     </Container>
   </main>;
