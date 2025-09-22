@@ -37,17 +37,6 @@ export default function Header({ isDarkMode, setIsDarkMode }: HeaderProps) {
             </Navbar.Brand>
             <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
             <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                {routes.filter(x => x.menuLabel).map(
-                  ({ menuLabel, path }, i) =>
-                    <Nav.Link
-                      as={Link} key={i} to={path}
-                      className={isActive(path) ? 'active' : ''}
-                      /* close menu after selection*/
-                      onClick={() => setTimeout(() => setExpanded(false), 200)}
-                    >{menuLabel}</Nav.Link>
-                )}
-              </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
