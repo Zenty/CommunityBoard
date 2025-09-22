@@ -28,7 +28,7 @@ export default function Header({ isDarkMode, setIsDarkMode }: HeaderProps) {
       expanded={expanded}
       expand="md"
       className="bg-primary"
-      data-bs-theme="light"
+      data-bs-theme={isDarkMode ? "dark" : "light"}
       fixed="top"
     >
       <Container fluid>
