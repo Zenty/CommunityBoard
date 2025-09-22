@@ -1,5 +1,4 @@
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
 import Header from "./partials/Header";
 import Main from './partials/Main';
 import Footer from './partials/Footer';
