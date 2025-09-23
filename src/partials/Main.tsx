@@ -2,7 +2,14 @@ import { Outlet } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useStateObject } from '../utils/useStateObject';
 
-export default function Main() {
+type HeaderProps = {
+    isUser: boolean;
+    isAdmin: boolean;
+    isDarkMode: boolean;
+    setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+
+export default function Main({}: HeaderProps) {
   // a state to use with outlet context
   const stateAndSetter = useStateObject({
     categoryChoice: 'All',

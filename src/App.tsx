@@ -13,16 +13,15 @@ export default function App() {
 
   const [isDarkMode, setIsDarkMode] = useLocalStorage<boolean>("isDarkMode", false) as [boolean, React.Dispatch<React.SetStateAction<boolean>>];
   const { isUser, isAdmin } = useAuth();
-  console.log(isUser, isAdmin);
 
   // scroll to top when the route changes
   useLocation();
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
   return <>
-    <Header {...{isDarkMode, setIsDarkMode}} />
-    <Main />
-    <Footer />
+    <Header {...{isUser, isAdmin, isDarkMode, setIsDarkMode}} />
+    <Main {...{isUser, isAdmin, isDarkMode, setIsDarkMode}}/>
+    <Footer {...{isUser, isAdmin, isDarkMode, setIsDarkMode}}/>
     {showBootstrapBreakpoints ? <BootstrapBreakpoints /> : null}
   </>;
 };

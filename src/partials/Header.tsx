@@ -2,16 +2,31 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Navbar, Button } from 'react-bootstrap';
 
- type HeaderProps = {
+type HeaderProps = {
+    isUser: boolean;
+    isAdmin: boolean;
     isDarkMode: boolean;
     setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
   };
 
-export default function Header({ isDarkMode, setIsDarkMode }: HeaderProps) {
+export default function Header({ isUser, isDarkMode, setIsDarkMode }: HeaderProps) {
 
   // whether the navbar is expanded or not
   // (we use this to close it after a click/selection)
   const [expanded, setExpanded] = useState(false);
+
+  const handleSignOut = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      await fetch('/api/login', {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      window.location.href = '/login';
+    } catch (err) {
+      window.location.href = '/';
+    }
+  };
 
   return <header>
     <Navbar
@@ -30,7 +45,7 @@ export default function Header({ isDarkMode, setIsDarkMode }: HeaderProps) {
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            {!isDarkMode ? (
+            { !isDarkMode ? (
               <Button variant="primary" href="#" className="navbar-button" title="Toggle DarkMode" onClick={() => setIsDarkMode(true)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-moon-fill" viewBox="0 0 16 16">
                   <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278" />
@@ -43,18 +58,21 @@ export default function Header({ isDarkMode, setIsDarkMode }: HeaderProps) {
                 </svg>
               </Button>
             )}
+            { !isUser ? (
             <Button variant="primary" href="/login" className="navbar-button" title="Sign In">
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
                 <path d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
                 <path d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
               </svg>
             </Button>
-            <Button variant="primary" href="/logout" className="navbar-button" title="Sign Out" style={{ display: 'none', color: 'darkred' }}>
+            ) : (
+              <Button variant="primary" href="" className="navbar-button" title="Sign Out" style={{ color: 'darkred' }} onClick={handleSignOut}>
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-box-arrow-right" viewBox="0 0 16 16">
                 <path d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
                 <path d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
               </svg>
             </Button>
+            )}
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>
