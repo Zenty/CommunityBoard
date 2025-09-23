@@ -10,7 +10,6 @@ export default function useAuth() {
     .then(json => {
       if (json && !json.error) {
         // json is a stored user object
-        console.log('User1:', json);
         setIsUser(true);
         if (json.role === 'admin') {
           setIsAdmin(true);
