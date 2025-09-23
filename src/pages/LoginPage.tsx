@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Form, Button, Alert, Tabs, Tab, Container, Row, Col } from 'react-bootstrap';
 
 LoginPage.route = {
@@ -18,8 +17,6 @@ export default function LoginPage() {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -36,7 +33,7 @@ export default function LoginPage() {
       if (data.error) setError(data.error);
       else {
         setSuccess('Logged in successfully!');
-        navigate('/');
+        window.location.href = '/';
       }
     } catch (err) {
       setError('Login failed.');
