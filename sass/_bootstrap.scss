@@ -29,3 +29,11 @@ $enable-negative-margins: true;
 .container {
   max-width: 970px;
 }
+
+.container.login-page-form .nav-tabs .nav-link {
+  color: #888;
+}
+
+.nav-tabs .nav-link.active {
+  color: black !important;
+}
