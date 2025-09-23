@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Form, Button, Alert, Tabs, Tab, Container, Row, Col } from 'react-bootstrap';
+import useAuth from '../utils/useAuth';
 
 LoginPage.route = {
   path: '/login'
@@ -16,6 +17,12 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const { isUser, isAdmin } = useAuth();
+  
+  if (isUser || isAdmin) {
+    window.location.href = '/';
+  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
