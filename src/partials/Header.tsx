@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Navbar, Button } from 'react-bootstrap';
-import isLoggedIn from '../utils/isLoggedIn';
 
  type HeaderProps = {
     isDarkMode: boolean;
@@ -14,7 +13,6 @@ export default function Header({ isDarkMode, setIsDarkMode }: HeaderProps) {
   // (we use this to close it after a click/selection)
   const [expanded, setExpanded] = useState(false);
 
-  console.log(isLoggedIn());
   return <header>
     <Navbar
       expanded={expanded}
