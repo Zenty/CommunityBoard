@@ -1,8 +1,8 @@
-NotFoundPage.route = {
+IndexPage.route = {
   path: '/'
 };
 
-export default function NotFoundPage() {
+export default function IndexPage() {
   return <>
     <h2>Welcome To The Community Board</h2>
     <p>
