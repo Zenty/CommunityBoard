@@ -1,0 +1,23 @@
+[data-bs-theme=light] {
+  color-scheme: light;
+  --bs-primary-rgb: 239, 239, 239;
+  --bs-link-color: rgb(132, 132, 132);
+}
+
+[data-bs-theme=dark] {
+  color-scheme: dark;
+  --bs-primary-rgb: 24, 24, 24;
+  --bs-link-color: rgb(184, 184, 184);
+}
+
+@media (max-width: 768px) {
+
+  header .container-fluid {
+    flex-direction: row-reverse;
+  }
+
+  header .navbar-brand {
+    display: none;
+  }
+
+}

@@ -82,7 +82,7 @@ export default function LoginPage() {
   };
 
   return (
-    <Container style={{ maxWidth: 400, marginTop: 80 }} className="login-page-form">
+    <Container style={{ maxWidth: 400 }} className="login-page-form">
       <Row>
         <Col>
           <Tabs defaultActiveKey="login" className="mb-3">
@@ -146,6 +146,7 @@ export default function LoginPage() {
                     type="password"
                     value={registerPassword}
                     onChange={e => setRegisterPassword(e.target.value)}
+                    minLength={8}
                     required
                   />
                 </Form.Group>
@@ -155,6 +156,7 @@ export default function LoginPage() {
                     type="password"
                     value={registerPasswordRepeat}
                     onChange={e => setRegisterPasswordRepeat(e.target.value)}
+                    minLength={8}
                     required
                   />
                 </Form.Group>

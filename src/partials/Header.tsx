@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Navbar, Button } from 'react-bootstrap';
 
@@ -10,10 +9,6 @@ type HeaderProps = {
   };
 
 export default function Header({ isUser, isDarkMode, setIsDarkMode }: HeaderProps) {
-
-  // whether the navbar is expanded or not
-  // (we use this to close it after a click/selection)
-  const [expanded, setExpanded] = useState(false);
 
   const handleSignOut = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -30,20 +25,14 @@ export default function Header({ isUser, isDarkMode, setIsDarkMode }: HeaderProp
 
   return <header>
     <Navbar
-      expanded={expanded}
       expand="md"
       className="bg-primary"
-      data-bs-theme={isDarkMode ? "dark" : "light"}
       fixed="top"
     >
       <Container fluid>
             <Navbar.Brand className="me-5" as={Link} to="/">
               The Community Board
             </Navbar.Brand>
-            <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
-            <Navbar.Collapse id="basic-navbar-nav">
-        </Navbar.Collapse>
-        <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
             { !isDarkMode ? (
               <Button variant="primary" href="#" className="navbar-button" title="Toggle DarkMode" onClick={() => setIsDarkMode(true)}>
@@ -74,7 +63,6 @@ export default function Header({ isUser, isDarkMode, setIsDarkMode }: HeaderProp
             </Button>
             )}
           </Navbar.Text>
-        </Navbar.Collapse>
       </Container>
     </Navbar>
   </header>;
