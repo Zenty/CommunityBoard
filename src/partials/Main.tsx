@@ -17,8 +17,8 @@ export default function Main({}: HeaderProps) {
     bwImages: false
   });
 
-  return <main className="mt-5">
-    <Container className="mt-5 mb-5">
+  return <main>
+    <Container className="p-5">
       <Outlet context={stateAndSetter}/>
     </Container>
   </main>;

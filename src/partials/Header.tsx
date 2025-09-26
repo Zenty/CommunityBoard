@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Navbar, Button } from 'react-bootstrap';
 
@@ -10,10 +9,6 @@ type HeaderProps = {
   };
 
 export default function Header({ isUser, isDarkMode, setIsDarkMode }: HeaderProps) {
-
-  // whether the navbar is expanded or not
-  // (we use this to close it after a click/selection)
-  const [expanded, setExpanded] = useState(false);
 
   const handleSignOut = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -30,7 +25,6 @@ export default function Header({ isUser, isDarkMode, setIsDarkMode }: HeaderProp
 
   return <header>
     <Navbar
-      expanded={expanded}
       expand="md"
       className="bg-primary"
       fixed="top"
