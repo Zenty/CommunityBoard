@@ -9,10 +9,10 @@ type HeaderProps = {
 
 export default function Footer({}: HeaderProps) {
   return <footer>
-    <Container fluid data-bs-theme="light">
+    <Container fluid>
       <Row>
         <Col className="text-center py-3 text-bg-primary">
-          © The Community Board {new Date().getFullYear()}
+          <p className="text-muted footer-text">© The Community Board {new Date().getFullYear()}</p>
         </Col>
       </Row>
     </Container>

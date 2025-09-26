@@ -1,10 +1,10 @@
 // Override bootstrap variables
-$font-family-sans-serif: 'Noto Sans';
+$font-family-sans-serif: 'Open Sans';
 $font-size-base: 1.0rem;
 $line-height-base: 1.4;
 $navbar-dark-color: rgba(white, .8) !default;
 $navbar-dark-hover-color: rgba(white, .9) !default;
-$primary: rgb(239, 239, 239);
+$primary: rgb(17, 94, 152);
 $enable-negative-margins: true;
 
 // Import bootstrap
@@ -17,8 +17,14 @@ $enable-negative-margins: true;
   font-weight: bold;
 }
 
+.navbar-button {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
 .navbar-button:hover, .navbar-button:active {
   background-color: transparent !important;
+  border-color: transparent !important;
 }
 
 .navbar-toggler, .navbar-toggler:focus {
@@ -30,12 +36,7 @@ $enable-negative-margins: true;
   max-width: 970px;
 }
 
-
-// Login Page specific styles
-.container.login-page-form .nav-tabs .nav-link {
-  color: #888;
-}
-
-.nav-tabs .nav-link.active {
-  color: black !important;
+// Footer styles
+.footer-text {
+  margin: 0;
 }
