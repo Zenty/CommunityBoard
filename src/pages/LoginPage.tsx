@@ -146,6 +146,7 @@ export default function LoginPage() {
                     type="password"
                     value={registerPassword}
                     onChange={e => setRegisterPassword(e.target.value)}
+                    minLength={8}
                     required
                   />
                 </Form.Group>
@@ -155,6 +156,7 @@ export default function LoginPage() {
                     type="password"
                     value={registerPasswordRepeat}
                     onChange={e => setRegisterPasswordRepeat(e.target.value)}
+                    minLength={8}
                     required
                   />
                 </Form.Group>
