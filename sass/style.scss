@@ -9,3 +9,15 @@
   --bs-primary-rgb: 24, 24, 24;
   --bs-link-color: rgb(184, 184, 184);
 }
+
+@media (max-width: 768px) {
+
+  header .container-fluid {
+    flex-direction: row-reverse;
+  }
+
+  header .navbar-brand {
+    display: none;
+  }
+
+}

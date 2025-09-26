@@ -33,17 +33,12 @@ export default function Header({ isUser, isDarkMode, setIsDarkMode }: HeaderProp
       expanded={expanded}
       expand="md"
       className="bg-primary"
-      //data-bs-theme={isDarkMode ? "dark" : "light"}
       fixed="top"
     >
       <Container fluid>
             <Navbar.Brand className="me-5" as={Link} to="/">
               The Community Board
             </Navbar.Brand>
-            <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
-            <Navbar.Collapse id="basic-navbar-nav">
-        </Navbar.Collapse>
-        <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
             { !isDarkMode ? (
               <Button variant="primary" href="#" className="navbar-button" title="Toggle DarkMode" onClick={() => setIsDarkMode(true)}>
@@ -74,7 +69,6 @@ export default function Header({ isUser, isDarkMode, setIsDarkMode }: HeaderProp
             </Button>
             )}
           </Navbar.Text>
-        </Navbar.Collapse>
       </Container>
     </Navbar>
   </header>;
