@@ -82,7 +82,7 @@ export default function LoginPage() {
   };
 
   return (
-    <Container style={{ maxWidth: 400, marginTop: 80 }} className="login-page-form">
+    <Container style={{ maxWidth: 400 }} className="login-page-form">
       <Row>
         <Col>
           <Tabs defaultActiveKey="login" className="mb-3">
