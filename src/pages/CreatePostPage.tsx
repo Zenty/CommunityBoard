@@ -81,7 +81,7 @@ export default function CreatePostPage() {
   }
 
   return (
-    <Container className="mt-5" style={{ maxWidth: '700px' }}>
+    <Container style={{ maxWidth: '700px' }}>
       <h2>Create Post</h2>
 
       {error && <Alert variant="danger">{error}</Alert>}
