@@ -17,6 +17,10 @@ $enable-negative-margins: true;
   font-weight: bold;
 }
 
+.navbar-brand.home-icon {
+  display: none;
+}
+
 .navbar-button {
   background-color: transparent !important;
   border-color: transparent !important;

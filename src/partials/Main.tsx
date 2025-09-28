@@ -18,7 +18,7 @@ export default function Main({}: HeaderProps) {
   });
 
   return <main>
-    <Container className="p-5">
+    <Container className="p-4">
       <Outlet context={stateAndSetter}/>
     </Container>
   </main>;
