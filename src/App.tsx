@@ -13,7 +13,7 @@ const showBootstrapBreakpoints = false;
 export default function App() {
 
   const [isDarkMode, setIsDarkMode] = useLocalStorage<boolean>("isDarkMode", false) as [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-  const { isUser, isAdmin } = useAuth();
+  const { isUser, isAdmin, userData } = useAuth();
 
   // Update <html> tag's data-bs-theme attribute
   useEffect(() => {
@@ -26,9 +26,9 @@ export default function App() {
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
   return <>
-      <Header {...{isUser, isAdmin, isDarkMode, setIsDarkMode}}/>
-      <Main {...{isUser, isAdmin, isDarkMode, setIsDarkMode}}/>
-      <Footer {...{isUser, isAdmin, isDarkMode, setIsDarkMode}}/>
+      <Header {...{isUser, isAdmin, userData, isDarkMode, setIsDarkMode}}/>
+      <Main {...{isUser, isAdmin, userData, isDarkMode, setIsDarkMode}}/>
+      <Footer {...{isUser, isAdmin, userData, isDarkMode, setIsDarkMode}}/>
       {showBootstrapBreakpoints ? <BootstrapBreakpoints /> : null}
   </>;
 };
