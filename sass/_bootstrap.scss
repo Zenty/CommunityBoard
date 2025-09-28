@@ -10,11 +10,15 @@ $enable-negative-margins: true;
 // Import bootstrap
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
-// Override some Bootstrap defaults
+// Header styles
 .navbar-brand {
   font-family: 'Open Sans', sans-serif;
   font-size: 30px;
   font-weight: bold;
+}
+
+.navbar-brand.home-icon {
+  display: none;
 }
 
 .navbar-button {
@@ -32,12 +36,19 @@ $enable-negative-margins: true;
   box-shadow: none;
 }
 
+// General styles
+
 main {
   margin-top: 76px;
 }
 
 .container {
   max-width: 970px;
+}
+
+// Index styles
+.index-container {
+  text-align: center;
 }
 
 // Footer styles
