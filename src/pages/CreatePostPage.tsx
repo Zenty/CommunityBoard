@@ -1,3 +1,4 @@
+import type UserData from '../interfaces/UserData.ts';
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
@@ -9,10 +10,11 @@ CreatePostPage.route = {
 type OutletContextType = {
   isUser: boolean;
   isAdmin: boolean;
+  userData: UserData | null;
 };
 
 export default function CreatePostPage() {
-  const { isUser } = useOutletContext<OutletContextType>();
+  const { isUser, userData } = useOutletContext<OutletContextType>();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
@@ -43,9 +45,11 @@ export default function CreatePostPage() {
 
     try {
       const postPayload = {
+        authorId: userData?.id,
         type,
         data: JSON.stringify({
           title: title.trim(),
+          author: userData?.firstName + ' ' + userData?.lastName,
           blurb,
           content: content.trim(),
         }),
