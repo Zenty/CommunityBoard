@@ -13,7 +13,6 @@ type OutletContextType = {
 
 export default function IndexPage() {
   const { isUser } = useOutletContext<OutletContextType>();
-  console.log(isUser);
   return <>
     <Container className="p-4 index-container">
       <div className="post-container">
