@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, Spinner } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
+import type Post from '../interfaces/Post.ts';
 
 IndexPage.route = {
   path: '/'
@@ -17,8 +18,9 @@ export default function IndexPage() {
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortOption, setSortOption] = useState('newest');
   const [typeFilter, setTypeFilter] = useState('');
+  const [sortOption, setSortOption] = useState('newest');
+  const [posts, setPosts] = useState<Post[]>([]);
 
   const handleCreatePost = () => {
     navigate('/create-post');
@@ -87,7 +89,7 @@ export default function IndexPage() {
             You need to be signed in to view and post items to the board.
           </p></>
         ) : (
-          <h2>There are currently no posts...</h2>
+            <h2>There are currently no posts...</h2>
         )}
       </div>
     </Container>
