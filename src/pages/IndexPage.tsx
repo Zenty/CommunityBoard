@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card, Spinner, Modal } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useFilteredPosts } from '../utils/useFilteredPosts';
 import type Post from '../interfaces/Post.ts';
+import type UserData from '../interfaces/UserData.ts';
 
 IndexPage.route = {
   path: '/'
@@ -10,11 +12,12 @@ IndexPage.route = {
 type OutletContextType = {
   isUser: boolean;
   isAdmin: boolean;
+  userData: UserData | null;
 };
 
 
 export default function IndexPage() {
-  const { isUser, isAdmin } = useOutletContext<OutletContextType>();
+  const { isUser, isAdmin, userData } = useOutletContext<OutletContextType>();
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,6 +25,7 @@ export default function IndexPage() {
   const [sortOption, setSortOption] = useState('newest');
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const filteredPosts = useFilteredPosts({ posts, searchTerm, typeFilter, sortOption, userData });
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [postToDelete, setPostToDelete] = useState<Post | null>(null);
@@ -118,7 +122,7 @@ export default function IndexPage() {
           <h2>There are currently no posts...</h2>
         ) : (
           <Row xs={1} sm={2} md={2} className="g-4">
-            {posts.map((post) => {
+            {filteredPosts.map((post) => {
               let postData: {
                 title?: string;
                 author?: string;
