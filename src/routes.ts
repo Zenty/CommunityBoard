@@ -6,12 +6,14 @@ import NotFoundPage from './pages/NotFoundPage.tsx';
 import IndexPage from './pages/IndexPage.tsx';
 import CreatePostPage from './pages/CreatePostPage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
+import PostDetailPage from './pages/PostDetailPage.tsx';
 
 export default [
   NotFoundPage,
   IndexPage,
   CreatePostPage,
-  LoginPage
+  LoginPage,
+  PostDetailPage
 ]
   // map the route property of each page component to a Route
   .map(x => (({ element: createElement(x), ...x.route }) as Route))

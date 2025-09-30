@@ -74,7 +74,11 @@ main {
   border-color: #115e98;
 }
 
-.card-post .badge {
+.post-detail-post h1 {
+  color: #115e98;
+}
+
+.card-post .badge, .post-detail-post .badge {
   background-color: #115e98 !important;
   color: rgb(255, 255, 255);
 }
@@ -84,7 +88,11 @@ main {
   border-color: #deb333;
 }
 
-.card-announcement .badge {
+.post-detail-announcement h1 {
+  color: #deb333;
+}
+
+.card-announcement .badge, .post-detail-announcement .badge {
   background-color: #deb333 !important;
   color: rgb(255, 255, 255);
 }
@@ -94,7 +102,11 @@ main {
   border-color: #a850bd;
 }
 
-.card-question .badge {
+.post-detail-question h1 {
+  color: #a850bd;
+}
+
+.card-question .badge, .post-detail-question .badge {
   background-color: #a850bd !important;
   color: rgb(255, 255, 255);
 }
@@ -104,7 +116,11 @@ main {
   border-color: #59bd50;
 }
 
-.card-event .badge {
+.post-detail-event h1 {
+  color: #59bd50;
+}
+
+.card-event .badge, .post-detail-event .badge {
   background-color: #59bd50 !important;
   color: rgb(255, 255, 255);
 }
@@ -114,7 +130,11 @@ main {
   border-color: #e56349;
 }
 
-.card-advert .badge {
+.post-detail-advert h1 {
+  color: #e56349;
+}
+
+.card-advert .badge, .post-detail-advert .badge {
   background-color: #e56349 !important;
   color: rgb(255, 255, 255);
 }

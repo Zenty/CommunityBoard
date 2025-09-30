@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card, Spinner, Modal } from 'react-bootstrap';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { useFilteredPosts } from '../utils/useFilteredPosts';
 import type Post from '../interfaces/Post.ts';
 import type UserData from '../interfaces/UserData.ts';
@@ -156,16 +156,18 @@ export default function IndexPage() {
 
               return (
                 <Col key={post.id}>
-                  <Card className={`card-${type}`}>
-                    <Card.Body>
-                      <Card.Title as="h3">
+                  <Link to={`/posts/${post.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Card className={`card-${type} h-100`}>
+                      <Card.Body>
+                        <Card.Title as="h3">
                           <span>{title}</span>
                           {isAdmin && (
                             <Button
                               variant="link"
                               className="text-danger p-0 ms-2"
                               title="Delete Post"
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.preventDefault(); // Prevent link from triggering
                                 setPostToDelete(post);
                                 setShowDeleteModal(true);
                               }}
@@ -174,15 +176,16 @@ export default function IndexPage() {
                             </Button>
                           )}
                         </Card.Title>
-                      <Card.Subtitle className="mb-2 text-muted">
-                        {created} by <b><i>{author}</i></b>
-                      </Card.Subtitle>
-                      <Card.Text>{blurb}</Card.Text>
-                      <div className="text-end">
-                        <span className="badge bg-secondary text-capitalize">{type}</span>
-                      </div>
-                    </Card.Body>
-                  </Card>
+                        <Card.Subtitle className="mb-2 text-muted">
+                          Created {created} by <b><i>{author}</i></b>
+                        </Card.Subtitle>
+                        <Card.Text>{blurb}</Card.Text>
+                        <div className="text-end">
+                          <span className="badge bg-secondary text-capitalize">{type}</span>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Link>
                 </Col>
               );
             })}
