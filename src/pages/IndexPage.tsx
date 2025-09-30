@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Card, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, Spinner, Modal } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import type Post from '../interfaces/Post.ts';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 IndexPage.route = {
   path: '/'
@@ -15,7 +14,7 @@ type OutletContextType = {
 
 
 export default function IndexPage() {
-  const { isUser } = useOutletContext<OutletContextType>();
+  const { isUser, isAdmin } = useOutletContext<OutletContextType>();
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -23,6 +22,9 @@ export default function IndexPage() {
   const [sortOption, setSortOption] = useState('newest');
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [postToDelete, setPostToDelete] = useState<Post | null>(null);
 
   const handleCreatePost = () => {
     navigate('/create-post');
@@ -101,6 +103,7 @@ export default function IndexPage() {
           </div>
         )}
       </div>
+
       <div className="post-container">
         {!isUser ? (
           <>
@@ -144,7 +147,22 @@ export default function IndexPage() {
                 <Col key={post.id}>
                   <Card className={`card-${type}`}>
                     <Card.Body>
-                      <Card.Title as="h3">{title}</Card.Title>
+                      <Card.Title as="h3">
+                          <span>{title}</span>
+                          {isAdmin && (
+                            <Button
+                              variant="link"
+                              className="text-danger p-0 ms-2"
+                              title="Delete Post"
+                              onClick={() => {
+                                setPostToDelete(post);
+                                setShowDeleteModal(true);
+                              }}
+                            >
+                              <i className="bi bi-trash-fill" style={{ fontSize: '1.2rem' }}></i>
+                            </Button>
+                          )}
+                        </Card.Title>
                       <Card.Subtitle className="mb-2 text-muted">
                         {created} by <b><i>{author}</i></b>
                       </Card.Subtitle>
@@ -161,5 +179,61 @@ export default function IndexPage() {
         )}
       </div>
     </Container>
+    {/* Delete Confirmation Modal */}
+      <Modal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete{' '}
+          <strong>
+            {postToDelete &&
+              (() => {
+                const parsed =
+                  typeof postToDelete.data === 'string'
+                    ? JSON.parse(postToDelete.data)
+                    : postToDelete.data;
+                return parsed.title || 'this post';
+              })()}
+          </strong>
+          ? This action cannot be undone.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={async () => {
+              if (!postToDelete) return;
+
+              try {
+                const response = await fetch(`/api/posts/${postToDelete.id}`, {
+                  method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                  throw new Error('Failed to delete post');
+                }
+
+                setPosts((prevPosts) =>
+                  prevPosts.filter((p) => p.id !== postToDelete.id)
+                );
+                setShowDeleteModal(false);
+                setPostToDelete(null);
+              } catch (error) {
+                console.error('Error deleting post:', error);
+                alert('Failed to delete post. Try again.');
+              }
+            }}
+          >
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
   </>;
 }
