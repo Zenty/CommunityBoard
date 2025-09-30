@@ -4,6 +4,7 @@ import Main from './partials/Main';
 import Footer from './partials/Footer';
 import BootstrapBreakpoints from './parts/BootstrapBreakpoints';
 import useLocalStorage from "use-local-storage";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import useAuth from './utils/useAuth';
 import { useEffect } from 'react';
 

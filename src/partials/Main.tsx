@@ -12,7 +12,7 @@ type HeaderProps = {
 
 export default function Main({isUser, isAdmin, userData}: HeaderProps) {
   return <main>
-    <Container className="p-4">
+    <Container className="p-4 main-container">
       <Outlet context={{ isUser, isAdmin, userData }} />
     </Container>
   </main>;
