@@ -67,7 +67,6 @@ export default function IndexPage() {
               <Col xs="auto">
                 <Form.Select
                   style={{ width: '180px' }}
-                  defaultValue=""
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
                 >
