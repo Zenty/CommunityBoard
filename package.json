@@ -20,6 +20,7 @@
     "better-express-store": "^1.0.5",
     "better-sqlite3": "^11.10.0",
     "bootstrap": "^5.3.6",
+    "bootstrap-icons": "^1.13.1",
     "callsites": "^4.2.0",
     "chokidar": "^4.0.3",
     "express": "^5.1.0",

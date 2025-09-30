@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card, Spinner } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import type Post from '../interfaces/Post.ts';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 IndexPage.route = {
   path: '/'
