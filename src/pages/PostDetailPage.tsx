@@ -97,18 +97,29 @@ export default function PostDetailPage() {
         ← Back
       </Button>
 
-      <div className="d-flex flex-wrap-wrap justify-content-between align-items-center mb-4">
+      <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-2">
         <h1 style={{ minWidth: '150px', marginRight: '20px' }}>{title}</h1>
         <div>
           {isAdmin && (
-            <Button
-              variant="outline-danger"
-              size="sm"
-              title="Delete Post"
-              onClick={() => setShowDeleteModal(true)}
-            >
-              <i className="bi bi-trash-fill"></i> Delete
-            </Button>
+            <div className="d-flex gap-2">
+              <Button
+                variant="outline-primary"
+                size="sm"
+                title="Edit Post"
+                onClick={() => { /* edit functionality to be added later */ }}
+              >
+                <i className="bi bi-pencil-fill"></i> Edit
+              </Button>
+
+              <Button
+                variant="outline-danger"
+                size="sm"
+                title="Delete Post"
+                onClick={() => setShowDeleteModal(true)}
+              >
+                <i className="bi bi-trash-fill"></i> Delete
+              </Button>
+            </div>
           )}
         </div>
       </div>
