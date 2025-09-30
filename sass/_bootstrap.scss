@@ -42,13 +42,101 @@ main {
   margin-top: 76px;
 }
 
+.main-container {
+  padding: 0;
+}
+
 .container {
-  max-width: 970px;
+  max-width: 1000px;
 }
 
 // Index styles
 .index-container {
   text-align: center;
+}
+
+.index-container .post-options-container {
+  margin-bottom: 40px;
+}
+
+// Post card styles
+.card .card-subtitle {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.card .card-text {
+  margin-top: 20px;
+}
+
+.card-post {
+  background-color: rgba(17, 94, 152, 0.1);
+  border-color: #115e98;
+}
+
+.post-detail-post h1 {
+  color: #115e98;
+}
+
+.card-post .badge, .post-detail-post .badge {
+  background-color: #115e98 !important;
+  color: rgb(255, 255, 255);
+}
+
+.card-announcement {
+  background-color: rgba(222, 179, 51, 0.1);
+  border-color: #deb333;
+}
+
+.post-detail-announcement h1 {
+  color: #deb333;
+}
+
+.card-announcement .badge, .post-detail-announcement .badge {
+  background-color: #deb333 !important;
+  color: rgb(255, 255, 255);
+}
+
+.card-question {
+  background-color: rgba(167, 80, 189, 0.1);
+  border-color: #a850bd;
+}
+
+.post-detail-question h1 {
+  color: #a850bd;
+}
+
+.card-question .badge, .post-detail-question .badge {
+  background-color: #a850bd !important;
+  color: rgb(255, 255, 255);
+}
+
+.card-event {
+  background-color: rgba(89, 189, 80, 0.1);
+  border-color: #59bd50;
+}
+
+.post-detail-event h1 {
+  color: #59bd50;
+}
+
+.card-event .badge, .post-detail-event .badge {
+  background-color: #59bd50 !important;
+  color: rgb(255, 255, 255);
+}
+
+.card-advert {
+  background-color: rgba(229, 99, 73, 0.1);
+  border-color: #e56349;
+}
+
+.post-detail-advert h1 {
+  color: #e56349;
+}
+
+.card-advert .badge, .post-detail-advert .badge {
+  background-color: #e56349 !important;
+  color: rgb(255, 255, 255);
 }
 
 // Footer styles
