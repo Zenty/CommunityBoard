@@ -38,20 +38,28 @@ export default function IndexPage() {
     const fetchPosts = async () => {
       try {
         const res = await fetch('/api/posts');
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
         const data: Post[] = await res.json();
-        setPosts(data);
+        setPosts(Array.isArray(data) ? data : []); // Ensure valid array
       } catch (error) {
         console.error('Failed to fetch posts:', error);
+        setPosts([]); // Set to empty array on error
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPosts();
-  }, []);
+    if (isUser) {
+      fetchPosts();
+    } else {
+      setLoading(false); // No need to fetch if not a user
+    }
+  }, [isUser]);
 
   return <>
-    <Container className="p-4 index-container">
+    <Container className="index-container">
       <div className="post-options-container">
         {isUser && (
           <div className="mb-4">

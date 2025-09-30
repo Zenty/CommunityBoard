@@ -3,7 +3,7 @@ import type Post from '../interfaces/Post.ts';
 import type UserData from '../interfaces/UserData.ts';
 
 type UseFilteredPostsParams = {
-  posts: Post[];
+  posts: Post[] | undefined; // changed: allow undefined
   searchTerm: string;
   typeFilter: string;
   sortOption: string;
@@ -18,7 +18,9 @@ export function useFilteredPosts({
   userData
 }: UseFilteredPostsParams): Post[] {
   return useMemo(() => {
-    let filtered = posts;
+    // Ensure posts is a valid array
+    const validPosts = Array.isArray(posts) ? posts : [];
+    let filtered = validPosts;
 
     // Normalize post.data into an object
     const getPostData = (post: Post) => {
@@ -50,16 +52,18 @@ export function useFilteredPosts({
 
     // Filter by "own posts" if selected
     if (sortOption === 'own' && userData) {
-      filtered = filtered.filter(post => post.authorId === userData.id);
+      filtered = filtered
+        .filter(post => post.authorId === userData.id)
+        .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()); // newest first
     }
 
     // Sort by created date
     if (sortOption === 'newest') {
-      filtered = filtered.sort(
+      filtered = [...filtered].sort(
         (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
       );
     } else if (sortOption === 'oldest') {
-      filtered = filtered.sort(
+      filtered = [...filtered].sort(
         (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()
       );
     }
