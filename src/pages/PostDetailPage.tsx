@@ -1,7 +1,7 @@
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Container, Spinner, Button, Modal } from 'react-bootstrap';
-import type Post from '../interfaces/Post';
+import type { PostWithComments } from '../interfaces/Post';
 import type UserData from '../interfaces/UserData.ts';
 import type PostData from '../interfaces/PostData';
 
@@ -19,9 +19,9 @@ type OutletContextType = {
 export default function PostDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isAdmin } = useOutletContext<OutletContextType>();
+  const { isUser, isAdmin, userData } = useOutletContext<OutletContextType>();
 
-  const [post, setPost] = useState<Post | null>(null);
+  const [post, setPost] = useState<PostWithComments | null>(null);
   const [loading, setLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -30,13 +30,16 @@ export default function PostDetailPage() {
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
 
+  const [newComment, setNewComment] = useState('');
+  const [postingComment, setPostingComment] = useState(false);
+
   // Reusable fetchPost function
   const fetchPost = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/posts/${id}`);
+      const res = await fetch(`/api/view_post_with_comments/${id}`);
       if (!res.ok) throw new Error('Failed to fetch post');
-      const data: Post = await res.json();
+      const data: PostWithComments = await res.json();
       setPost(data);
 
       const postData = typeof data.data === 'string'
@@ -171,6 +174,49 @@ export default function PostDetailPage() {
   const created = post.created ? new Date(post.created).toLocaleDateString() : 'Invalid date';
   const type = post.type || 'post';
 
+  const handleCommentSubmit = async () => {
+    if (!newComment.trim()) return;
+
+    setPostingComment(true);
+
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          postid: post?.id,
+          authorid: userData?.id,
+          data: JSON.stringify({
+            text: newComment.trim(),
+            authorName: userData?.firstName + ' ' + userData?.lastName || 'Anonymous',
+            role: isAdmin ? 'admin' : 'user',
+          }),
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to post comment');
+
+      setNewComment('');
+      await fetchPost(); // refresh to show new comment
+    } catch (err) {
+      console.error(err);
+      alert('Could not post comment.');
+    } finally {
+      setPostingComment(false);
+    }
+  };
+
+  const validCommentsCount = Array.isArray(post.commentsData)
+  ? post.commentsData.filter((comment) => {
+      try {
+        let parsedData = typeof comment.data === 'string' ? JSON.parse(comment.data) : comment.data;
+        return parsedData?.text?.trim().length > 0;
+      } catch {
+        return false;
+      }
+    }).length
+  : 0;
+
   return (
     <Container className={`post-detail post-detail-${type}`}>
       <Button className="mb-3" variant="link" onClick={() => navigate(-1)}>
@@ -267,6 +313,80 @@ export default function PostDetailPage() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <hr className="my-4" />
+
+      <h4>Comments ({validCommentsCount})</h4>
+
+      {/* Comment List */}
+      {Array.isArray(post.commentsData) && post.commentsData.length > 0 && (
+        post.commentsData
+          .map((comment) => {
+            let commentText = '';
+            let authorName = 'Anonymous';
+            let role = 'user';
+
+            try {
+              if (typeof comment.data === 'string') {
+                const parsed = JSON.parse(comment.data);
+                commentText = parsed?.text || '';
+                authorName = parsed?.authorName || authorName;
+                role = parsed?.role || role;
+              } else if (comment.data && typeof comment.data === 'object') {
+                commentText = comment.data.text || '';
+                authorName = comment.data.authorName || authorName;
+                role = comment.data.role || role;
+              }
+            } catch (e) {
+              console.error('Failed to parse comment data', e);
+            }
+
+            // If no actual comment text, skip rendering this comment
+            if (!commentText.trim()) {
+              return null;
+            }
+
+            return (
+              <div key={comment.commentId} className="mb-3 p-3 comment-body border rounded bg-light">
+                <div className="d-flex align-items-center gap-2 fw-bold">
+                  {authorName}{' '}
+                  {role === 'admin' && (
+                    <span className="badge" style={{ fontSize: '0.75em' }}>
+                      Admin
+                    </span>
+                  )}
+                </div>
+                <div className="text-muted" style={{ fontSize: '0.85em' }}>
+                  {new Date(comment.created + 'Z').toLocaleString()}
+                </div>
+                <div className="mt-2">{commentText}</div>
+              </div>
+            );
+          })
+          .filter(Boolean) // remove any nulls from comments without text
+      )}
+
+      {/* Comment Form */}
+      {isUser && (
+        <div className="mt-4">
+          <h5>Add a Comment</h5>
+          <textarea
+            className="form-control mb-2"
+            rows={3}
+            placeholder="Write your comment..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <Button
+            variant="primary"
+            onClick={handleCommentSubmit}
+            disabled={postingComment || !newComment.trim()}
+          >
+            {postingComment ? 'Posting...' : 'Post Comment'}
+          </Button>
+        </div>
+      )}
+
     </Container>
   );
 }

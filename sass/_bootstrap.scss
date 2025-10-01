@@ -139,6 +139,27 @@ main {
   color: rgb(255, 255, 255);
 }
 
+.badge.bg-info {
+  opacity: 0.5;
+  color: rgb(255, 255, 255) !important;
+}
+
+.badge.bg-info.has-comments {
+  opacity: 1;
+}
+
+.comment-body {
+  color: rgb(66, 66, 66);
+}
+
+.comment-body .text-muted {
+  color: rgb(141, 141, 141) !important;
+}
+
+.comment-body .badge {
+  background-color: rgb(17, 94, 152) !important;
+}
+
 // Footer styles
 .footer-text {
   margin: 0;
