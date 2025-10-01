@@ -180,7 +180,10 @@ export default function IndexPage() {
                           Created {created} by <b><i>{author}</i></b>
                         </Card.Subtitle>
                         <Card.Text>{blurb}</Card.Text>
-                        <div className="text-end">
+                        <div className="d-flex justify-content-end flex-wrap gap-2 align-items-center">
+                          <span className={post.comments > 0 ? "has-comments badge bg-info" : "badge bg-info"}>
+                            {post.comments} {post.comments === 1 ? 'comment' : 'comments'}
+                          </span>
                           <span className="badge bg-secondary text-capitalize">{type}</span>
                         </div>
                       </Card.Body>

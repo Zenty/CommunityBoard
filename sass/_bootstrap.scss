@@ -60,6 +60,14 @@ main {
 }
 
 // Post card styles
+.card {
+  transition: all 0.2s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-5px);
+  transition: all 0.2s ease-in-out;
+}
+
 .card .card-subtitle {
   font-size: 14px;
   font-weight: 300;
@@ -137,6 +145,27 @@ main {
 .card-advert .badge, .post-detail-advert .badge {
   background-color: #e56349 !important;
   color: rgb(255, 255, 255);
+}
+
+.badge.bg-info {
+  opacity: 0.5;
+  color: rgb(255, 255, 255) !important;
+}
+
+.badge.bg-info.has-comments {
+  opacity: 1;
+}
+
+.comment-body {
+  color: rgb(66, 66, 66);
+}
+
+.comment-body .text-muted {
+  color: rgb(141, 141, 141) !important;
+}
+
+.comment-body .badge {
+  background-color: rgb(17, 94, 152) !important;
 }
 
 // Footer styles
