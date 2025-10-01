@@ -33,6 +33,10 @@ export default function PostDetailPage() {
   const [newComment, setNewComment] = useState('');
   const [postingComment, setPostingComment] = useState(false);
 
+  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState<{ commentId: number } | null>(null);
+  const [deletingComment, setDeletingComment] = useState(false);
+
   // Reusable fetchPost function
   const fetchPost = async () => {
     setLoading(true);
@@ -110,7 +114,8 @@ export default function PostDetailPage() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          ...post,
+          id: post.id,
+          type: post.type,
           data: JSON.stringify(updatedData)
         })
       });
@@ -215,7 +220,38 @@ export default function PostDetailPage() {
         return false;
       }
     }).length
-  : 0;
+    : 0;
+  
+    const handleDeleteCommentClick = (comment: { commentId: number }) => {
+    setCommentToDelete(comment);
+    setShowDeleteCommentModal(true);
+  };
+
+  const confirmDeleteComment = async () => {
+    if (!commentToDelete) return;
+    setDeletingComment(true);
+
+    try {
+      const response = await fetch(`/api/comments/${commentToDelete.commentId}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete comment');
+      }
+
+      setShowDeleteCommentModal(false);
+      setCommentToDelete(null);
+
+      // Refresh post to update comments list
+      await fetchPost();
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      alert('Failed to delete comment. Try again.');
+    } finally {
+      setDeletingComment(false);
+    }
+  };
 
   return (
     <Container className={`post-detail post-detail-${type}`}>
@@ -314,6 +350,36 @@ export default function PostDetailPage() {
         </Modal.Footer>
       </Modal>
 
+      {/* Delete Confirmation Modal for Comments */}
+      <Modal
+        show={showDeleteCommentModal}
+        onHide={() => setShowDeleteCommentModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Comment</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this comment? This action cannot be undone.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteCommentModal(false)}
+            disabled={deletingComment}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={confirmDeleteComment}
+            disabled={deletingComment}
+          >
+            {deletingComment ? 'Deleting...' : 'Delete'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <hr className="my-4" />
 
       <h4>Comments ({validCommentsCount})</h4>
@@ -348,12 +414,26 @@ export default function PostDetailPage() {
 
             return (
               <div key={comment.commentId} className="mb-3 p-3 comment-body border rounded bg-light">
-                <div className="d-flex align-items-center gap-2 fw-bold">
-                  {authorName}{' '}
-                  {role === 'admin' && (
-                    <span className="badge" style={{ fontSize: '0.75em' }}>
-                      Admin
-                    </span>
+                <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-1 gap-2">
+                  <div className="d-flex align-items-center gap-2 fw-bold">
+                    {authorName}
+                    {role === 'admin' && (
+                      <span className="badge" style={{ fontSize: '0.75em' }}>
+                        Admin
+                      </span>
+                    )}
+                  </div>
+                  {isAdmin && (
+                    <div className="d-flex gap-2">
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        title="Delete Comment"
+                        onClick={() => handleDeleteCommentClick({ commentId: comment.commentId })}
+                      >
+                        <i className="bi bi-trash-fill"></i> Delete
+                      </Button>
+                    </div>
                   )}
                 </div>
                 <div className="text-muted" style={{ fontSize: '0.85em' }}>

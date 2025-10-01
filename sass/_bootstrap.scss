@@ -60,6 +60,14 @@ main {
 }
 
 // Post card styles
+.card {
+  transition: all 0.2s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-5px);
+  transition: all 0.2s ease-in-out;
+}
+
 .card .card-subtitle {
   font-size: 14px;
   font-weight: 300;
